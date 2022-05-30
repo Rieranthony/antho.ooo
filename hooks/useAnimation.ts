@@ -12,7 +12,7 @@ export function useAnimation({ divRef }: UseCanvasAnimationArgs) {
 
   useEffect(() => {
     (async () => {
-      if (window.screen.width >= 800) {
+      if (window.screen.width > 600) {
         const data = (await import("./sequence.json")).default;
         setData(data);
       }
@@ -23,8 +23,7 @@ export function useAnimation({ divRef }: UseCanvasAnimationArgs) {
    */
   useEffect(() => {
     divRef.current.innerHTML = data[0];
-    console.log(data[0]);
-  }, [data]);
+  }, []);
 
   /**
    * Handles the animation on scroll
