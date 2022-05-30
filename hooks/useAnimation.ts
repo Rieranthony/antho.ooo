@@ -12,7 +12,7 @@ export function useAnimation({ divRef }: UseCanvasAnimationArgs) {
 
   useEffect(() => {
     (async () => {
-      const data = (await import("./sequence.json")).default;
+      const data = await import("./sequence.json");
       setData(data);
     })();
   }, []);
