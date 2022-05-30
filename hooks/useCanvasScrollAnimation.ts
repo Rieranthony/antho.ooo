@@ -1,5 +1,5 @@
 import { useEffect, MutableRefObject } from "react";
-import { useWindowSize } from "./useWindowSize";
+import { useMediaQuery } from "./useWindowSize";
 
 type UseCanvasScrollAnimationArgs = {
   divRef: MutableRefObject<HTMLDivElement>;
@@ -10,10 +10,10 @@ export function useCanvasScrollAnimation({
   divRef,
   onChangeFrameToIndex
 }: UseCanvasScrollAnimationArgs) {
-  const windowSize = useWindowSize();
+  const isMobile = useMediaQuery(600);
 
   const listener = () => {
-    if (windowSize.width && windowSize.width > 600) {
+    if (isMobile) {
       return;
     }
 
