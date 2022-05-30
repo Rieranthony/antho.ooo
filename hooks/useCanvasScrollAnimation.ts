@@ -48,7 +48,9 @@ export function useCanvasScrollAnimation({
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", listener);
+    if (window.screen.width >= 800) {
+      window.addEventListener("scroll", listener);
+    }
 
     return () => {
       window.removeEventListener("scroll", listener);
