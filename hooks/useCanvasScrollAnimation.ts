@@ -1,4 +1,5 @@
 import { useEffect, MutableRefObject } from "react";
+import { useWindowSize } from "./useWindowSize";
 
 type UseCanvasScrollAnimationArgs = {
   divRef: MutableRefObject<HTMLDivElement>;
@@ -9,7 +10,13 @@ export function useCanvasScrollAnimation({
   divRef,
   sequenceData
 }: UseCanvasScrollAnimationArgs) {
+  const windowSize = useWindowSize();
+
   const listener = () => {
+    if (windowSize.width && windowSize.width > 600) {
+      return;
+    }
+
     const html = document.documentElement;
     const frameCount = sequenceData.length;
     const initialFrameNumber = 1;
@@ -48,9 +55,7 @@ export function useCanvasScrollAnimation({
   };
 
   useEffect(() => {
-    if (window.screen.width > 600) {
-      window.addEventListener("scroll", listener);
-    }
+    window.addEventListener("scroll", listener);
 
     return () => {
       window.removeEventListener("scroll", listener);
