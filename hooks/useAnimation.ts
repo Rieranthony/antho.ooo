@@ -12,12 +12,11 @@ export function useAnimation({ divRef }: UseCanvasAnimationArgs) {
 
   useEffect(() => {
     (async () => {
-      if (window.screen.width > 600) {
-        const data = (await import("./sequence.json")).default;
-        setData(data);
-      }
+      const data = (await import("./sequence.json")).default;
+      setData(data);
     })();
   }, []);
+
   /**
    * This draw the first frame
    */
