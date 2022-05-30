@@ -29,7 +29,7 @@ const Home: NextPage<HomeProps> = ({ videos }) => {
         <div className="flex flex-col justify-center items-center">
           <div
             ref={divRef}
-            className="aspect-square max-w-[600px] bg-black text-[12px] leading-[12px] md:text-[16px] md:leading-[16px]"
+            className="aspect-square max-w-[600px] bg-black text-[6px] leading-[6px] md:text-[16px] md:leading-[16px]"
           />
           <h1 className="font-medium text-4xl mt-10 mb-4">Anthony Riera</h1>
           <SocialBar />
