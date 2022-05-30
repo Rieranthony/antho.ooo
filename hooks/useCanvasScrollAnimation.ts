@@ -3,12 +3,12 @@ import { useWindowSize } from "./useWindowSize";
 
 type UseCanvasScrollAnimationArgs = {
   divRef: MutableRefObject<HTMLDivElement>;
-  sequenceData: string[];
+  onChangeFrameToIndex: (scrollFraction: number) => void;
 };
 
 export function useCanvasScrollAnimation({
   divRef,
-  sequenceData
+  onChangeFrameToIndex
 }: UseCanvasScrollAnimationArgs) {
   const windowSize = useWindowSize();
 
@@ -18,8 +18,6 @@ export function useCanvasScrollAnimation({
     }
 
     const html = document.documentElement;
-    const frameCount = sequenceData.length;
-    const initialFrameNumber = 1;
 
     const { top, height } = divRef.current.getBoundingClientRect();
 
@@ -44,13 +42,9 @@ export function useCanvasScrollAnimation({
      * The animation start and stop when the element enter / leave the window.
      * */
     const scrollFraction = scrollTop / toScroll;
-    const frameIndex =
-      Math.min(frameCount - 1, Math.ceil(scrollFraction * frameCount)) +
-      initialFrameNumber -
-      1;
 
     requestAnimationFrame(() => {
-      divRef.current.innerHTML = sequenceData[frameIndex];
+      onChangeFrameToIndex(scrollFraction);
     });
   };
 
