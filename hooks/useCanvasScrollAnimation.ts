@@ -1,41 +1,20 @@
 import { useEffect, MutableRefObject } from "react";
 
-import { FrameMap } from "./useCanvasAnimationState";
-
 type UseCanvasScrollAnimationArgs = {
-  canvasRef: MutableRefObject<HTMLCanvasElement>;
-  frameCount: number;
-  frameMap: FrameMap;
-  initialFrameNumber: number;
+  divRef: MutableRefObject<HTMLDivElement>;
+  sequenceData: string[];
 };
 
-function drawImageScaled(
-  img: HTMLImageElement,
-  ctx: CanvasRenderingContext2D | null
-) {
-  if (!ctx) return;
-
-  var canvas = ctx.canvas;
-  var hRatio = canvas.width / img.width;
-  var vRatio = canvas.height / img.height;
-  var ratio = Math.min(hRatio, vRatio);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0, img.width * hRatio, img.height * vRatio);
-}
-
-export function useCanvasScrollAnimation(
-  {
-    frameCount,
-    canvasRef,
-    frameMap,
-    initialFrameNumber
-  }: UseCanvasScrollAnimationArgs,
-  animate: boolean
-) {
+export function useCanvasScrollAnimation({
+  divRef,
+  sequenceData
+}: UseCanvasScrollAnimationArgs) {
   const listener = () => {
     const html = document.documentElement;
+    const frameCount = sequenceData.length;
+    const initialFrameNumber = 1;
 
-    const { top, height } = canvasRef.current.getBoundingClientRect();
+    const { top, height } = divRef.current.getBoundingClientRect();
 
     const topRelativeToDoc = top + window.scrollY;
 
@@ -64,34 +43,16 @@ export function useCanvasScrollAnimation(
       1;
 
     requestAnimationFrame(() => {
-      const context = canvasRef.current.getContext("2d");
-
-      const imgRef =
-        frameMap.get(frameIndex + 1) || frameMap.get(initialFrameNumber);
-
-      if (!imgRef) {
-        return;
-      }
-
-      // Clear canvas before drawing on it
-      context?.clearRect(
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
-
-      // Draw frame on canvas
-      drawImageScaled(imgRef, context);
+      divRef.current.innerHTML = sequenceData[frameIndex];
     });
   };
 
   useEffect(() => {
-    animate && window.addEventListener("scroll", listener);
+    window.addEventListener("scroll", listener);
 
     return () => {
-      animate && window.removeEventListener("scroll", listener);
+      window.removeEventListener("scroll", listener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [animate]);
+  }, []);
 }

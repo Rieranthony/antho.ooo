@@ -3,22 +3,18 @@ import Head from "next/head";
 import { useRef } from "react";
 import { SocialBar } from "../components/SocialBar";
 import { YoutubeSection, Video } from "../components/VideoSection";
-import { useCanvasAnimation } from "../hooks/useCanvasAnimation";
+import { useAnimation } from "../hooks/useAnimation";
 
 type HomeProps = {
   videos: Video[];
 };
 
 const Home: NextPage<HomeProps> = ({ videos }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
-  useCanvasAnimation({
+  useAnimation({
     // @ts-ignore
-    canvasRef,
-    baseUrl: "/sequence",
-    baseFileName: "face",
-    initialFrameNumber: 0,
-    frameCount: 43
+    divRef
   });
 
   return (
@@ -31,9 +27,9 @@ const Home: NextPage<HomeProps> = ({ videos }) => {
 
       <main className="container mx-auto p-6 md:pt-20">
         <div className="flex flex-col justify-center items-center">
-          <canvas
-            ref={canvasRef}
-            className="w-full aspect-square max-w-lg bg-black"
+          <div
+            ref={divRef}
+            className="aspect-square max-w-[600px] bg-black text-[12px] leading-[12px] md:text-[16px] md:leading-[16px]"
           />
           <h1 className="font-medium text-4xl mt-10 mb-4">Anthony Riera</h1>
           <SocialBar />
