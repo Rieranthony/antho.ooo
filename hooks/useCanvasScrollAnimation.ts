@@ -26,7 +26,7 @@ export function useCanvasScrollAnimation({
     const fromScroll = topRelativeToDoc - height;
 
     // To position in pixels the animation should stop
-    const toScroll = fromScroll + height * 1.5;
+    const toScroll = fromScroll + height * 1.8;
 
     // Animation out of boundaries, we are not animating anymore
     if (scrollTop <= fromScroll || scrollTop >= toScroll) {
