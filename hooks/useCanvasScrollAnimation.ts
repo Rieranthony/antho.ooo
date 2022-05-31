@@ -1,5 +1,5 @@
 import { useEffect, MutableRefObject } from "react";
-import { useMediaQuery } from "./useWindowSize";
+import useDeviceDetect from "./useDeviceDetect";
 
 type UseCanvasScrollAnimationArgs = {
   divRef: MutableRefObject<HTMLDivElement>;
@@ -10,13 +10,9 @@ export function useCanvasScrollAnimation({
   divRef,
   onChangeFrameToIndex
 }: UseCanvasScrollAnimationArgs) {
-  const isMobile = useMediaQuery(600);
+  const { isMobile } = useDeviceDetect();
 
   const listener = () => {
-    if (isMobile) {
-      return;
-    }
-
     const html = document.documentElement;
 
     const { top, height } = divRef.current.getBoundingClientRect();
@@ -49,11 +45,15 @@ export function useCanvasScrollAnimation({
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", listener);
+    if (!isMobile) {
+      window.addEventListener("scroll", listener);
+    } else {
+      window.removeEventListener("scroll", listener);
+    }
 
     return () => {
       window.removeEventListener("scroll", listener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isMobile]);
 }

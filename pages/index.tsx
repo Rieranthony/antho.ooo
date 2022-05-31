@@ -69,22 +69,32 @@ export type YTType = {
 };
 
 export async function getStaticProps() {
-  const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API_KEY}&channelId=UCvjRCspZdRy1NMqyh_7BKyQ&type=video&part=snippet,id&order=date&maxResults=20`
-  );
-  const json = (await res.json()) as { items: YTType[] };
-  const filteredVideos = json.items.map((item) => ({
-    title: item.snippet.title,
-    thumbnailUrl: `https://img.youtube.com/vi/${item.id.videoId}/maxresdefault.jpg`,
-    url: `https://www.youtube.com/watch?v=${item.id.videoId}`
-  }));
+  try {
+    const res = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API_KEY}&channelId=UCvjRCspZdRy1NMqyh_7BKyQ&type=video&part=snippet,id&order=date&maxResults=20`
+    );
+    const json = (await res.json()) as { items: YTType[] };
 
-  return {
-    props: {
-      videos: filteredVideos
-    },
-    revalidate: 120
-  };
+    const filteredVideos = json.items.map((item) => ({
+      title: item.snippet.title,
+      thumbnailUrl: `https://img.youtube.com/vi/${item.id.videoId}/maxresdefault.jpg`,
+      url: `https://www.youtube.com/watch?v=${item.id.videoId}`
+    }));
+
+    return {
+      props: {
+        videos: filteredVideos
+      },
+      revalidate: 600
+    };
+  } catch (err) {
+    console.log("ERROR", err);
+    return {
+      props: {
+        videos: []
+      }
+    };
+  }
 }
 
 export default Home;
