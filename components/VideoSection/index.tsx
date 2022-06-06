@@ -26,7 +26,7 @@ function Video({ url, title, thumbnailUrl }: Video) {
 
 export function YoutubeSection({ videos }: { videos: Video[] }) {
   return (
-    <div className="grid gap-4 grid-flow-row md:grid-flow-col md:grid-cols-2">
+    <div className="grid gap-6 md:gap-4 grid-row-1 md:grid-cols-2">
       {videos.map((video, i) => (
         <Video {...video} key={`video-${i}`} />
       ))}

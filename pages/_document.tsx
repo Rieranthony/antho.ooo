@@ -14,6 +14,7 @@ class MyDocument extends Document {
             name="description"
             content="Software engineer really interested in web3, great designs and good UX. I make youtube videos about how I approach software development, side project stories, and everything in between."
           />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />
