@@ -7,7 +7,7 @@ const youtube = google.youtube({
   auth: process.env.GOOGLE_API_KEY // specify your API key here
 });
 
-const videoId = "";
+const videoId = "Vx71pC4aFFI";
 const imageUrl = "https://antho.ooo/api/thumbnail";
 
 const job = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -16,15 +16,10 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  if (!videoId || !imageUrl) {
-    res.status(400).send("Bad Request");
-    return;
-  }
-
   try {
     // et the view count from gppgle api
     const { data } = await youtube.videos.list({
-      id: videoId
+      id: [videoId]
     });
 
     const videosResult = data.items;
