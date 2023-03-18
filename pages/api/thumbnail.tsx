@@ -1,5 +1,4 @@
 import { ImageResponse } from "@vercel/og";
-import Image from "next/image";
 
 export const config = {
   runtime: "experimental-edge"
@@ -13,7 +12,7 @@ const fontRegular = fetch(
   new URL("../../assets/JetBrainsMono-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-export default async function (req: any) {
+const thumbnail = async function (req: any) {
   const [fontBoldData, fontRegularData] = await Promise.all([
     fontBold,
     fontRegular
@@ -47,7 +46,7 @@ export default async function (req: any) {
             fontWeight: 800
           }}
         >
-          <Image
+          <img
             width="1280"
             height="720"
             style={{
@@ -87,4 +86,6 @@ export default async function (req: any) {
       status: 500
     });
   }
-}
+};
+
+export default thumbnail;
