@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/api/updateVideoDetailsJob",
+            "schedule": "*/3 * * * *"
+        }
+    ]
+}
