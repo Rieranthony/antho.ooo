@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/no-anonymous-default-export */
 import { ImageResponse } from "@vercel/og";
 import { defaultHead } from "next/head";
@@ -59,6 +60,7 @@ export default async function (req: NextRequest) {
               width: "100%",
               height: "100%"
             }}
+            alt="thumbnail"
             src={`https://www.antho.ooo/thumbnail_base.jpg`}
           />
           <div style={{ marginTop }}>{formattedViews}</div>
