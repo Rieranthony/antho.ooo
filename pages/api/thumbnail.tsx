@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/no-anonymous-default-export */
 import { ImageResponse } from "@vercel/og";
+import Image from "next/image";
 import { defaultHead } from "next/head";
 // eslint-disable-next-line @next/next/no-server-import-in-page
 import { NextRequest } from "next/server";
@@ -51,7 +52,7 @@ export default async function (req: NextRequest) {
             fontWeight: 800
           }}
         >
-          <img
+          <Image
             width="1280"
             height="720"
             style={{
