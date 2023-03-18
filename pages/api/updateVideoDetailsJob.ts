@@ -2,15 +2,36 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { google } from "googleapis";
 import axios from "axios";
 
-const youtube = google.youtube({
-  version: "v3",
-  auth: process.env.GOOGLE_API_KEY // specify your API key here
-});
+const credentialJSON = JSON.parse(
+  process.env.GOOGLE_APPLICATION_CREDENTIALS || ""
+);
 
 const videoId: string = "Vx71pC4aFFI";
 const imageUrl = "https://antho.ooo/api/thumbnail";
 
 const job = async (req: NextApiRequest, res: NextApiResponse) => {
+  // configure a JWT auth client
+  const jwtClient = new google.auth.JWT(
+    credentialJSON.client_email,
+    undefined,
+    credentialJSON.private_key,
+    ["https://www.googleapis.com/auth/youtube"]
+  );
+  //authenticate request
+  jwtClient.authorize(function (err, tokens) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("Successfully connected!");
+    }
+  });
+
+  const youtube = google.youtube({
+    version: "v3",
+    auth: jwtClient
+  });
+
   try {
     // et the view count from gppgle api
     const { data } = await youtube.videos.list({
