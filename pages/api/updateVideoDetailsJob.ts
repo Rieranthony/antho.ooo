@@ -14,7 +14,7 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // et the view count from gppgle api
     const { data } = await youtube.videos.list({
-      id: videoId as unknown as [string],
+      id: [videoId],
       part: ["statistics"]
     });
 
@@ -53,7 +53,8 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
       media: {
         mimeType: "image/png",
         body: imageBuffer
-      }
+      },
+      auth: process.env.GOOGLE_API_KEY
     });
 
     console.log("response from google API", response);
