@@ -14,7 +14,8 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // et the view count from gppgle api
     const { data } = await youtube.videos.list({
-      id: [videoId]
+      id: [videoId],
+      part: ["statistics"]
     });
 
     console.log("videos", data);
