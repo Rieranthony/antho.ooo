@@ -22,6 +22,8 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
       id: [videoId]
     });
 
+    console.log("videos", data);
+
     const videosResult = data.items;
 
     if (!videosResult || !videosResult[0]) {
@@ -30,6 +32,8 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Get the view count in the result from the API
     const viewCount = videosResult[0].statistics?.viewCount;
+
+    console.log("view count", viewCount);
 
     // Don't know why but maybe video has no view
     if (!viewCount) {
@@ -55,6 +59,8 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
         body: imageBuffer
       }
     });
+
+    console.log("response from google API", response);
 
     res.status(200).json(response.data);
   } catch (error) {
