@@ -15,15 +15,20 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
     credentialJSON.client_email,
     undefined,
     credentialJSON.private_key,
-    ["https://www.googleapis.com/auth/youtube"]
+    [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.upload"
+    ]
   );
+
   //authenticate request
   jwtClient.authorize(function (err, tokens) {
     if (err) {
-      console.log(err);
+      console.info(err);
       return;
     } else {
-      console.log("Successfully connected!");
+      console.info("Successfully connected!");
     }
   });
 
@@ -39,7 +44,7 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
       part: ["statistics"]
     });
 
-    console.log("videos", data);
+    console.info("videos", data);
 
     const videosResult = data.items;
 
@@ -50,7 +55,7 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
     // Get the view count in the result from the API
     const viewCount = videosResult[0].statistics?.viewCount;
 
-    console.log("view count", viewCount);
+    console.info("view count", viewCount);
 
     // Don't know why but maybe video has no view
     if (!viewCount) {
@@ -75,7 +80,7 @@ const job = async (req: NextApiRequest, res: NextApiResponse) => {
         mimeType: "image/png",
         body: imageBuffer
       },
-      auth: process.env.GOOGLE_API_KEY
+      auth: jwtClient
     });
 
     console.log("response from google API", response);
