@@ -1,10 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/no-anonymous-default-export */
 import { ImageResponse } from "@vercel/og";
 import Image from "next/image";
-import { defaultHead } from "next/head";
-// eslint-disable-next-line @next/next/no-server-import-in-page
-import { NextRequest } from "next/server";
 
 export const config = {
   runtime: "experimental-edge"
@@ -18,7 +13,7 @@ const fontRegular = fetch(
   new URL("../../assets/JetBrainsMono-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-export default async function (req: NextRequest) {
+export default async function (req: any) {
   const [fontBoldData, fontRegularData] = await Promise.all([
     fontBold,
     fontRegular
