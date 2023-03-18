@@ -11,11 +11,6 @@ const videoId = "Vx71pC4aFFI";
 const imageUrl = "https://antho.ooo/api/thumbnail";
 
 const job = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "POST") {
-    res.status(405).send("Method not allowed");
-    return;
-  }
-
   try {
     // et the view count from gppgle api
     const { data } = await youtube.videos.list({
