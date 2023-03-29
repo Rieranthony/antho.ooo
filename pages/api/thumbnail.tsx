@@ -58,7 +58,7 @@ const thumbnail = async function (req: any) {
             alt="thumbnail"
             src={`https://www.antho.ooo/thumbnail_base.jpg`}
           />
-          <div style={{ marginTop }}>{formattedViews}</div>
+          <div style={{ marginTop }}>{formattedViews} ish</div>
         </div>
       ),
       {
