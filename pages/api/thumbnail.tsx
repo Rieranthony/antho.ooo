@@ -26,7 +26,7 @@ const thumbnail = async function (req: any) {
     const views: number = parseInt(viewsParams);
 
     // Format number properly
-    const formattedViews = views.toLocaleString("en-US");
+    const formattedViews = `${views.toLocaleString("en-US")}`;
 
     const fontSize = views < 999999 ? 280 : 235;
     const marginTop = views < 999999 ? -70 : -40;
@@ -42,7 +42,6 @@ const thumbnail = async function (req: any) {
             alignItems: "center",
             backgroundColor: "#fff",
             color: "#fff",
-            fontSize,
             fontWeight: 800
           }}
         >
@@ -58,7 +57,8 @@ const thumbnail = async function (req: any) {
             alt="thumbnail"
             src={`https://www.antho.ooo/thumbnail_base.jpg`}
           />
-          <div style={{ marginTop }}>{formattedViews} ish</div>
+          <div style={{ marginTop, fontSize }}>{formattedViews}</div>
+          <div style={{ marginTop, fontSize: 100 }}>ish</div>
         </div>
       ),
       {
